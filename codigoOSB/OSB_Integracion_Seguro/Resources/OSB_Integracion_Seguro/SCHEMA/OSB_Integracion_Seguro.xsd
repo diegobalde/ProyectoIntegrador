@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://www.globallogic.com.ar/Integracion/Seguros" xmlns:tns="http://www.globallogic.com.ar/Integracion/Seguros" 
+xmlns:art="http://www.globallogic.com.ar/interface"
+xmlns:hogar="http://bootcamp.globallogic.com.ar/SeguroHogar/IF/schema"
+xmlns:automotor="http://www.globallogic.com.ar/getCarteraI"
+>
+	<xs:import namespace="http://www.globallogic.com.ar/interface"  schemaLocation="../../ART/Schemas/interface.xsd"></xs:import>
+	<xs:import namespace="http://bootcamp.globallogic.com.ar/SeguroHogar/IF/schema"  schemaLocation="../../Hogar/SCHEMA/IntegradorSeguroHogar_IF.xsd"></xs:import>
+	<xs:import namespace="http://www.globallogic.com.ar/getCarteraI"  schemaLocation="../../Automotor/XSD/getCarteraInterfaz.xsd"></xs:import>
+
+	<xs:element name="ObtenerCarteraRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TIPO_DOCUMENTO" type="tns:TipoDocumento"/>
+				<xs:element name="NRO_DOCUMENTO" type="xs:long"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ObtenerCarteraResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ART_Seguros">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="art:PolizasResponseInterface" ></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Hogar_Seguros">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="hogar:ObtenerCarteraResponse" ></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Automotor_Seguros">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="automotor:getCarteraResponse"></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<!-- Esperando respuesta de Hogar -->
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+		<xs:simpleType name="TipoDocumento">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DNI"/>
+			<xs:enumeration value="dni"/>
+			<xs:enumeration value="LC"/>
+			<xs:enumeration value="LE"/>
+			<xs:enumeration value="CUIT"/>
+			<xs:enumeration value="cuit"/>
+			<xs:enumeration value="CUIL"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+</xs:schema>

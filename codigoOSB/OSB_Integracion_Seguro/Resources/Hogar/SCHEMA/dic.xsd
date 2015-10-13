@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dic="http://www.globallogic.com.ar/bootcamp/integrador/schemas/dic" targetNamespace="http://www.globallogic.com.ar/bootcamp/integrador/schemas/dic" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="idCliente">
+		<xs:sequence>
+			<xs:element name="idCliente" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Cliente">
+		<xs:sequence>
+			<xs:element name="idCliente" type="xs:long"/>
+			<xs:element name="fechaNacimiento" type="xs:date"/>
+			<xs:element name="nombre" type="xs:string"/>
+			<xs:element name="apellido" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PolizaHeader">
+		<xs:sequence>
+			<xs:element name="idPoliza" type="xs:long"/>
+			<xs:element name="fechaEmision" type="xs:date"/>
+			<xs:element name="fechaVencimiento" type="xs:date"/>
+			<xs:element name="tipo" type="xs:string"/>
+			<xs:element name="tipoPlan" type="xs:string"/>
+			<xs:element name="vigente" type="dic:Vigente"/>
+			<xs:element name="premio" type="xs:decimal"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Tipos Restringidos -->
+	<xs:simpleType name="TipoDocumento">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DNI"/>
+			<xs:enumeration value="LC"/>
+			<xs:enumeration value="LE"/>
+			<xs:enumeration value="CUIT"/>
+			<xs:enumeration value="CUIL"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Vigente">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Si"/>
+			<xs:enumeration value="No"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Menejo de errores -->
+	<xs:complexType name="RespuestaError">
+		<xs:sequence>
+			<xs:element name="codigo" type="xs:string" />
+			<xs:element name="descripcion" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

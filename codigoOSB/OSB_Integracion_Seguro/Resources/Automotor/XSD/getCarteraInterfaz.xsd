@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.globallogic.com.ar/getCarteraI" xmlns:ns="http://www.globallogic.com.ar/getCarteraI"
+
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+				<xs:element name="getCarteraRequest">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="tipoDoc" type="xs:string"/>
+							<xs:element name="numero" type="xs:int"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
+				<xs:element name="listaPolizas">
+						<xs:complexType>
+							<xs:sequence>	
+								<xs:element name="poliza" minOccurs="0" maxOccurs="unbounded">
+									<xs:complexType>
+									<xs:sequence>
+										<xs:element name="idPoliza" type="xs:int"/>
+										<xs:element name="prima" type="xs:decimal"/>
+										<xs:element name="premio" type="xs:decimal"/>
+										<xs:element name="idProductor" type="xs:int"/>
+										<xs:element name="idAutomovil" type="xs:int"/>
+										<xs:element name="idCliente" type="xs:int"/>
+										<xs:element name="idPlan" type="xs:int"/>
+										<xs:element name="fechaContratacion" type="xs:dateTime"/>
+										<xs:element name="fechaValidez" type="xs:dateTime"/>
+										<xs:element name="sumaAsegurada" type="xs:decimal"/>
+										<xs:element name="estadoPoliza" type="xs:string"/>
+									</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				
+				<xs:element name="getCarteraResponse" >
+					<xs:complexType>
+						<xs:choice>
+							<xs:element ref="ns:listaPolizas"/>
+							<xs:element name="Error">
+								<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ErrorCode" type="xs:string"/>
+									<xs:element name="DescripError" type="xs:string"/>
+								</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+</xs:schema>

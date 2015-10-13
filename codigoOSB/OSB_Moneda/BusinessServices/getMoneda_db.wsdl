@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_Application/SOA_Project_1/getMoneda" name="getMoneda-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_Application/SOA_Project_1/getMoneda" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_Application/SOA_Project_1/getMoneda" location="../Resources/WSDL/getMoneda.wsdl"/>
+  <binding name="getMoneda_ptt-binding" type="tns:getMoneda_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="getMoneda">
+      <soap:operation soapAction="getMoneda"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="getMoneda-service">
+    <port name="getMoneda-port" binding="tns:getMoneda_ptt-binding">
+      <soap:address location="jca://eis/DB/grupo_hogar"/>
+    </port>
+  </service>
+</definitions>

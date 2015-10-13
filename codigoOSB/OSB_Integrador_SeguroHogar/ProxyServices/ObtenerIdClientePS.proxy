@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/typesystem/config" xmlns:con1="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="Mixed" xsi:type="con6:MixedBindingType" xmlns:con6="http://www.bea.com/wli/sb/services/bindings/config">
+      <con6:request type="XML">
+        <con:schema ref="OSB_Integrador_SeguroHogar/Resources/SCHEMA/SeguroHogar" element="ObtenerIdClienteRequest"/>
+      </con6:request>
+      <con6:response type="XML">
+        <con:schema ref="OSB_Integrador_SeguroHogar/Resources/SCHEMA/SeguroHogar" element="ObtenerIdClienteResponse"/>
+      </con6:response>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router errorHandler="_onErrorHandler-1263301038074778868-2e6d060f.1503d117bb0.-8000">
+    <con1:pipeline type="request" name="Validation_request">
+      <con1:stage name="ValidateRequest">
+        <con1:context>
+          <con2:varNsDecl namespace="http://bootcamp.globallogic.com.ar/SeguroHogar/schema" prefix="sch"/>
+        </con1:context>
+        <con1:actions>
+          <con3:validate>
+            <con2:id>_ActionId-1113149026872498937-3b5775e4.150380b8986.-7fd4</con2:id>
+            <con3:schema ref="OSB_Integrador_SeguroHogar/Resources/SCHEMA/SeguroHogar"/>
+            <con3:schemaElement xmlns:sch="http://bootcamp.globallogic.com.ar/SeguroHogar/schema">sch:ObtenerIdClienteRequest</con3:schemaElement>
+            <con3:varName>body</con3:varName>
+            <con3:location>
+              <con2:xpathText>./sch:ObtenerIdClienteRequest</con2:xpathText>
+            </con3:location>
+          </con3:validate>
+        </con1:actions>
+      </con1:stage>
+    </con1:pipeline>
+    <con1:pipeline type="response" name="Validation_response">
+      <con1:stage name="ValidateResponse">
+        <con1:context>
+          <con2:varNsDecl namespace="http://bootcamp.globallogic.com.ar/SeguroHogar/schema" prefix="sch"/>
+        </con1:context>
+        <con1:actions>
+          <con3:validate>
+            <con2:id>_ActionId-1113149026872498937-3b5775e4.150380b8986.-7fbe</con2:id>
+            <con3:schema ref="OSB_Integrador_SeguroHogar/Resources/SCHEMA/SeguroHogar"/>
+            <con3:schemaElement xmlns:sch="http://bootcamp.globallogic.com.ar/SeguroHogar/schema">sch:ObtenerIdClienteResponse</con3:schemaElement>
+            <con3:varName>body</con3:varName>
+            <con3:location>
+              <con2:xpathText>./sch:ObtenerIdClienteResponse</con2:xpathText>
+            </con3:location>
+          </con3:validate>
+        </con1:actions>
+      </con1:stage>
+    </con1:pipeline>
+    <con1:pipeline type="error" name="_onErrorHandler-1263301038074778868-2e6d060f.1503d117bb0.-8000">
+      <con1:stage name="Catching">
+        <con1:context>
+          <con2:varNsDecl namespace="http://bootcamp.globallogic.com.ar/SeguroHogar/schema" prefix="sch"/>
+          <con2:varNsDecl namespace="http://www.globallogic.com.ar/bootcamp/integrador/schemas/dic" prefix="dic"/>
+        </con1:context>
+        <con1:actions>
+          <con5:route>
+            <con2:id>_ActionId-1263301038074778868-2e6d060f.1503d117bb0.-7fec</con2:id>
+            <con5:service ref="OSB_Common/Proxy/LoggerManager" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con5:outboundTransform>
+              <con3:replace contents-only="true" varName="body">
+                <con2:id>_ActionId-1263301038074778868-2e6d060f.1503d117bb0.-7fd2</con2:id>
+                <con3:location>
+                  <con2:xpathText>.</con2:xpathText>
+                </con3:location>
+                <con3:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="OSB_Common/Resoucers/XQuery/generateRequestLogger"/>
+                    <con2:param name="anyType1">
+                      <con2:path><![CDATA[<error>
+	<body>{$body}</body>
+	<fault>{$fault}</fault>
+</error>]]></con2:path>
+                    </con2:param>
+                    <con2:param name="message">
+                      <con2:path>"&lt;&lt;ObtenerIdClientePS Error>>"</con2:path>
+                    </con2:param>
+                    <con2:param name="varLogger">
+                      <con2:path>"Fault and body"</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+            </con5:outboundTransform>
+          </con5:route>
+          <con3:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-1263301038074778868-2e6d060f.1503d117bb0.-7f64</con2:id>
+            <con3:location>
+              <con2:xpathText>.</con2:xpathText>
+            </con3:location>
+            <con3:expr>
+              <con2:xqueryText><![CDATA[<sch:ObtenerIdClienteResponse>
+	<sch:resultadoError>
+		<dic:codigo>{data($fault/ctx:errorCode)}</dic:codigo>
+	    <dic:descripcion>{data($fault/ctx:reason)}</dic:descripcion>
+	</sch:resultadoError>
+</sch:ObtenerIdClienteResponse>]]></con2:xqueryText>
+            </con3:expr>
+          </con3:replace>
+          <con2:reply>
+            <con2:id>_ActionId-1263301038074778868-2e6d060f.1503d117bb0.-7f9e</con2:id>
+          </con2:reply>
+        </con1:actions>
+      </con1:stage>
+    </con1:pipeline>
+    <con1:pipeline type="error" name="_onErrorHandler-1263301038074778868-2e6d060f.1503d117bb0.-7ee5">
+      <con1:stage name="Catching Route">
+        <con1:context/>
+        <con1:actions>
+          <con3:Error>
+            <con2:id>_ActionId-1263301038074778868-2e6d060f.1503d117bb0.-7ecd</con2:id>
+            <con3:errCode>HDP010</con3:errCode>
+            <con3:message>No se encontro el cliente con los datos enviados</con3:message>
+          </con3:Error>
+        </con1:actions>
+      </con1:stage>
+    </con1:pipeline>
+    <con1:flow>
+      <con1:pipeline-node name="Validation">
+        <con1:request>Validation_request</con1:request>
+        <con1:response>Validation_response</con1:response>
+      </con1:pipeline-node>
+      <con1:route-node name="RouteToObtenerIdClienteDbBS" error-handler="_onErrorHandler-1263301038074778868-2e6d060f.1503d117bb0.-7ee5">
+        <con1:context>
+          <con2:varNsDecl namespace="http://bootcamp.globallogic.com.ar/SeguroHogar/schema" prefix="sch"/>
+          <con2:varNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/obtenerIdCliente" prefix="obt"/>
+          <con:variable name="responseDB" path="$responseDB" asChild="false">
+            <con:schema ref="OSB_Integrador_SeguroHogar/Resources/SCHEMA/obtenerIdCliente_sp" element="OutputParameters"/>
+          </con:variable>
+        </con1:context>
+        <con1:actions>
+          <con4:route>
+            <con2:id>_ActionId-1113149026872498937-3b5775e4.150380b8986.-7fab</con2:id>
+            <con4:service ref="OSB_Integrador_SeguroHogar/BusinessServices/ObtenerIdClienteDbBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con4:operation>obtenerIdCliente</con4:operation>
+            <con4:outboundTransform>
+              <con3:replace contents-only="true" varName="body">
+                <con2:id>_ActionId-1113149026872498937-3b5775e4.150380b8986.-7f93</con2:id>
+                <con3:location>
+                  <con2:xpathText>.</con2:xpathText>
+                </con3:location>
+                <con3:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="OSB_Integrador_SeguroHogar/Resources/XQuery/generateRequestToObtenerIdClienteDbBS"/>
+                    <con2:param name="obtenerIdClienteRequestPS">
+                      <con2:path>$body/sch:ObtenerIdClienteRequest</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+            </con4:outboundTransform>
+            <con4:responseTransform>
+              <con3:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-7385726461759142025-26d6df16.1503862fcd6.-7fcd</con2:id>
+                <con3:location>
+                  <con2:xpathText>.</con2:xpathText>
+                </con3:location>
+                <con3:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="OSB_Integrador_SeguroHogar/Resources/XQuery/generateResponseFromObtenerIdClienteDbBS"/>
+                    <con2:param name="outputParameters">
+                      <con2:path>$body/obt:OutputParameters</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+            </con4:responseTransform>
+          </con4:route>
+        </con1:actions>
+      </con1:route-node>
+    </con1:flow>
+  </ser:router>
+</xml-fragment>

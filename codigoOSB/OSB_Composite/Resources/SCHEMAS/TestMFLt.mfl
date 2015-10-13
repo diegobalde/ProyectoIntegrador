@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!DOCTYPE MessageFormat SYSTEM 'mfl.dtd'>
+<!--  Enter description of the message format here.  -->
+<MessageFormat name='Lista' version='2.02'>
+    <StructFormat name='GroupNames' delimOptional='y' repeat='*'>
+        <FieldFormat name='id' type='String' delimRef='' delim=';' delimOptional='n' codepage='windows-1252'/>
+        <FieldFormat name='nombre' type='String' delimRef='' delim=';' delimOptional='n' codepage='windows-1252'/>
+        <FieldFormat name='apellido' type='String' delimRef='' delim=';' delimOptional='n' codepage='windows-1252'/>
+        <FieldFormat name='edad' type='String' delimRef='' delim=';' delimOptional='n' codepage='windows-1252'/>
+        <FieldFormat name='ciudad' type='String' delimRef='' delim='\n' delimOptional='n' codepage='windows-1252'/>
+    </StructFormat>
+</MessageFormat>

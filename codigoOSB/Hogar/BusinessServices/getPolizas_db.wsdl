@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_Application/SOA_Project_1/getPolizas" name="getPolizas-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_Application/SOA_Project_1/getPolizas" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_Application/SOA_Project_1/getPolizas" location="../Resources/WSDL/getPolizas.wsdl"/>
+  <binding name="getPolizas_ptt-binding" type="tns:getPolizas_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="getPolizas">
+      <soap:operation soapAction="getPolizas"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="getPolizas-service">
+    <port name="getPolizas-port" binding="tns:getPolizas_ptt-binding">
+      <soap:address location="jca://eis/DB/grupo_hogar"/>
+    </port>
+  </service>
+</definitions>

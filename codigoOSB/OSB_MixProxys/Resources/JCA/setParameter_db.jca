@@ -1,0 +1,15 @@
+<adapter-config name="setParameter" 
+				adapter="Database Adapter" 
+				wsdlLocation="../WSDL/setParameter.wsdl" 
+				xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/grupo_hogar" UIConnectionName="GrupoHogar" adapterRef=""/>
+  <endpoint-interaction portType="setParameter_ptt" operation="setParameter">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="ESCUELASOA1"/>
+      <property name="ProcedureName" value="SETPARAMETER"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

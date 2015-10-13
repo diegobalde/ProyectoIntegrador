@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://bootcamp.globallogic.com.ar/SeguroHogar/schema" targetNamespace="http://bootcamp.globallogic.com.ar/SeguroHogar/schema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="./dic.xsd"/>
+	<xs:element name="CarteraResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="polizas" type="tns:PolizaHeader" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="cliente" type="tns:Cliente"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Cliente" type="tns:Cliente"/>
+	<xs:element name="PolizaHeaderResponse" type="tns:PolizaHeader"/>
+</xs:schema>

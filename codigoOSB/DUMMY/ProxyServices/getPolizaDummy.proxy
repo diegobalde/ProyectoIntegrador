@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con3:SoapBindingType" xmlns:con3="http://www.bea.com/wli/sb/services/bindings/config">
+      <con3:wsdl ref="DUMMY/Resources/WSDL/getPoliza"/>
+      <con3:port>
+        <con3:name>getPoliza_Port</con3:name>
+        <con3:namespace>http://www.globallogic.com.ar/getPoliza</con3:namespace>
+      </con3:port>
+      <con3:selector type="SOAP body"/>
+      <con3:WSI-compliant>false</con3:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/DUMMY/ProxyServices/getPolizaDummy</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="ValidateInput">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.globallogic.com.ar/poliza" prefix="pol"/>
+        </con:context>
+        <con:actions>
+          <con1:validate>
+            <con2:id>_ActionId-1163559230885728659-6a629cba.15004811ba7.-7e1b</con2:id>
+            <con1:schema ref="DUMMY/Resources/SCHEMAS/XSD_Poliza"/>
+            <con1:schemaElement xmlns:pol="http://www.globallogic.com.ar/poliza">pol:PolizaRequest</con1:schemaElement>
+            <con1:varName>body</con1:varName>
+            <con1:location>
+              <con2:xpathText>./pol:PolizaRequest</con2:xpathText>
+            </con1:location>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response">
+      <con:stage name="GenerateResponse">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.globallogic.com.ar/poliza" prefix="pol"/>
+        </con:context>
+        <con:actions>
+          <con1:replace varName="body">
+            <con2:id>_ActionId-1163559230885728659-6a629cba.15004811ba7.-7dcd</con2:id>
+            <con1:location>
+              <con2:xpathText>./pol:PolizaRequest</con2:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con2:xqueryText><![CDATA[<pol:PolizaResponse>
+     <pol:nroPoliza>3</pol:nroPoliza>
+     <pol:tipo>1</pol:tipo>
+     <pol:fechaEmision>2015-09-26</pol:fechaEmision>
+     <pol:fechaVencimiento>123456</pol:fechaVencimiento>
+     <pol:vigente>1</pol:vigente>
+</pol:PolizaResponse>]]></con2:xqueryText>
+            </con1:expr>
+          </con1:replace>
+        </con:actions>
+      </con:stage>
+      <con:stage name="ValidateOutput">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.globallogic.com.ar/poliza" prefix="pol"/>
+        </con:context>
+        <con:actions>
+          <con1:validate>
+            <con2:id>_ActionId-1163559230885728659-6a629cba.15004811ba7.-7e01</con2:id>
+            <con1:schema ref="DUMMY/Resources/SCHEMAS/XSD_Poliza"/>
+            <con1:schemaElement xmlns:pol="http://www.globallogic.com.ar/poliza">pol:PolizaResponse</con1:schemaElement>
+            <con1:varName>body</con1:varName>
+            <con1:location>
+              <con2:xpathText>./pol:PolizaResponse</con2:xpathText>
+            </con1:location>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

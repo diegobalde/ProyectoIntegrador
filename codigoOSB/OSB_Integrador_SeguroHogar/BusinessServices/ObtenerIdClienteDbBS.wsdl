@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_Application/SOA_Project_1/obtenerIdCliente" name="obtenerIdCliente-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_Application/SOA_Project_1/obtenerIdCliente" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_Application/SOA_Project_1/obtenerIdCliente" location="../Resources/WSDL/obtenerIdCliente.wsdl"/>
+  <binding name="obtenerIdCliente_ptt-binding" type="tns:obtenerIdCliente_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="obtenerIdCliente">
+      <soap:operation soapAction="obtenerIdCliente"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="obtenerIdCliente-service">
+    <port name="obtenerIdCliente-port" binding="tns:obtenerIdCliente_ptt-binding">
+      <soap:address location="jca://eis/DB/grupo_hogar"/>
+    </port>
+  </service>
+</definitions>

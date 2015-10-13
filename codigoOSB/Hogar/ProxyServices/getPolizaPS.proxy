@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="Hogar/Resources/WSDL/getPoliza"/>
+      <con:port>
+        <con:name>getPoliza_Port</con:name>
+        <con:namespace>http://www.globallogic.com.ar/getPoliza</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/Hogar/ProxyServices/getPolizaPS</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router errorHandler="_onErrorHandler-1163559230885728659-6a629cba.15004811ba7.-7c76">
+    <con:pipeline type="request" name="getPoliza_request">
+      <con:stage name="ValidateInput">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.globallogic.com.ar/poliza" prefix="pol"/>
+        </con:context>
+        <con:actions>
+          <con2:validate>
+            <con1:id>_ActionId-1163559230885728659-6a629cba.15004811ba7.-7f72</con1:id>
+            <con2:schema ref="Hogar/Resources/SCHEMAS/XSD_Poliza"/>
+            <con2:schemaElement xmlns:pol="http://www.globallogic.com.ar/poliza">pol:PolizaRequest</con2:schemaElement>
+            <con2:varName>body</con2:varName>
+            <con2:location>
+              <con1:xpathText>./pol:PolizaRequest</con1:xpathText>
+            </con2:location>
+          </con2:validate>
+        </con:actions>
+      </con:stage>
+      <con:stage name="AssignBodyBackUp">
+        <con:context/>
+        <con:actions>
+          <con2:assign varName="BodyBackUp">
+            <con1:id>_ActionId-1163559230885728659-6a629cba.15004811ba7.-7f07</con1:id>
+            <con2:expr>
+              <con1:xqueryText>$body</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="getPoliza_response">
+      <con:stage name="ValidateOutput">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.globallogic.com.ar/poliza" prefix="pol"/>
+        </con:context>
+        <con:actions>
+          <con2:validate>
+            <con1:id>_ActionId-1163559230885728659-6a629cba.15004811ba7.-7e7f</con1:id>
+            <con2:schema ref="Hogar/Resources/SCHEMAS/XSD_Poliza"/>
+            <con2:schemaElement xmlns:pol="http://www.globallogic.com.ar/poliza">pol:PolizaResponse</con2:schemaElement>
+            <con2:varName>body</con2:varName>
+            <con2:location>
+              <con1:xpathText>./pol:PolizaResponse</con1:xpathText>
+            </con2:location>
+          </con2:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-1163559230885728659-6a629cba.15004811ba7.-7c76">
+      <con:stage name="ManejadorGeneralError">
+        <con:context/>
+        <con:actions>
+          <con1:reply>
+            <con1:id>_ActionId-1163559230885728659-6a629cba.15004811ba7.-7c67</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="request" name="logGetPoliza_request">
+      <con:stage name="logGetPolizaRequest">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.globallogic.com.ar/poliza" prefix="pol"/>
+        </con:context>
+        <con:actions>
+          <con5:route>
+            <con1:id>_ActionId-7225510842324108615-5998f399.15014025ce6.-7e31</con1:id>
+            <con5:service ref="OSB_Common/Proxy/LoggerManager" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con5:outboundTransform>
+              <con2:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-7225510842324108615-5998f399.15014025ce6.-7e14</con1:id>
+                <con2:location>
+                  <con1:xpathText>.</con1:xpathText>
+                </con2:location>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="OSB_Common/Resoucers/XQuery/generateRequestLogger"/>
+                    <con1:param name="anyType1">
+                      <con1:path>$body</con1:path>
+                    </con1:param>
+                    <con1:param name="message">
+                      <con1:path>"&lt;&lt; REQUEST LOGGING >>"</con1:path>
+                    </con1:param>
+                    <con1:param name="varLogger">
+                      <con1:path>"body"</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+              <con2:transport-headers>
+                <con1:id>_ActionId-7225510842324108615-5998f399.15014025ce6.-7d88</con1:id>
+                <con2:header-set>outbound-request</con2:header-set>
+                <con2:header name="Service" value="expression">
+                  <con1:xqueryText>fn:data($inbound/ctx:transport/ctx:uri)</con1:xqueryText>
+                </con2:header>
+                <con2:header name="Operation" value="expression">
+                  <con1:xqueryText>fn:data($inbound/ctx:service/ctx:operation)</con1:xqueryText>
+                </con2:header>
+              </con2:transport-headers>
+            </con5:outboundTransform>
+          </con5:route>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="logGetPoliza_response">
+      <con:stage name="logGetPolizaResponse">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.globallogic.com.ar/poliza" prefix="pol"/>
+        </con:context>
+        <con:actions>
+          <con5:route>
+            <con1:id>_ActionId-7225510842324108615-5998f399.15014025ce6.-7e00</con1:id>
+            <con5:service ref="OSB_Common/Proxy/LoggerManager" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con5:outboundTransform>
+              <con2:replace contents-only="true" varName="body">
+                <con1:id>_ActionId-7225510842324108615-5998f399.15014025ce6.-7dcf</con1:id>
+                <con2:location>
+                  <con1:xpathText>.</con1:xpathText>
+                </con2:location>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="OSB_Common/Resoucers/XQuery/generateRequestLogger"/>
+                    <con1:param name="anyType1">
+                      <con1:path>$body</con1:path>
+                    </con1:param>
+                    <con1:param name="message">
+                      <con1:path>"&lt;&lt; LOGGING RESPONSE >>"</con1:path>
+                    </con1:param>
+                    <con1:param name="varLogger">
+                      <con1:path>"body"</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+              <con2:transport-headers copy-all="true">
+                <con1:id>_ActionId-7225510842324108615-5998f399.15014025ce6.-7d52</con1:id>
+                <con2:header-set>outbound-request</con2:header-set>
+                <con2:header name="Service" value="expression">
+                  <con1:xqueryText>fn:data($inbound/ctx:transport/ctx:uri)</con1:xqueryText>
+                </con2:header>
+                <con2:header name="Operation" value="expression">
+                  <con1:xqueryText>fn:data($inbound/ctx:service/ctx:operation)</con1:xqueryText>
+                </con2:header>
+              </con2:transport-headers>
+            </con5:outboundTransform>
+          </con5:route>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="getPoliza">
+        <con:request>getPoliza_request</con:request>
+        <con:response>getPoliza_response</con:response>
+      </con:pipeline-node>
+      <con:pipeline-node name="logGetPoliza">
+        <con:request>logGetPoliza_request</con:request>
+        <con:response>logGetPoliza_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteToGetPolizaBS">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.globallogic.com.ar/poliza" prefix="pol"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con1:id>_ActionId-1163559230885728659-6a629cba.15004811ba7.-7d6f</con1:id>
+            <con3:service ref="Hogar/BusinessServices/getPolizaBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>getPoliza</con3:operation>
+            <con3:outboundTransform>
+              <con2:replace varName="body">
+                <con1:id>_ActionId-1163559230885728659-6a629cba.15004811ba7.-7c87</con1:id>
+                <con2:location>
+                  <con1:xpathText>./pol:PolizaRequest</con1:xpathText>
+                </con2:location>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="Hogar/Resources/XQuery/generateGetPolizaToBS"/>
+                    <con1:param name="polizaRequest1">
+                      <con1:path>$body/pol:PolizaRequest</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con2:replace varName="body">
+                <con1:id>_ActionId-1163559230885728659-6a629cba.15004811ba7.-7c77</con1:id>
+                <con2:location>
+                  <con1:xpathText>./pol:PolizaResponse</con1:xpathText>
+                </con2:location>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="Hogar/Resources/XQuery/generateGetPolizaFromBS"/>
+                    <con1:param name="polizaResponse1">
+                      <con1:path>$body/pol:PolizaResponse</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

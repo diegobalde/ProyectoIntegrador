@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://globallogic.com.ar/bootcamp/db/sp/getMoneda"  >
+	<xs:element name="InputParameters">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="P_PARAMETER" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OutputParameters">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element  name="P_ERRORCODE" type="xs:int" />
+				<xs:element  name="P_ERRORDESCRIPTOR" type="xs:string" />
+				<xs:element  name="P_PARAMVALUE" type="xs:string"  />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

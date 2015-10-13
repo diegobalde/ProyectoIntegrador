@@ -1,0 +1,96 @@
+<!-- edited with XMLSpy v2007 rel. 3 (http://www.altova.com) by v920453 (Telecom) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://servipag.cl/ESB/Common/DataAccess" xmlns:hdr="http://www.servipag.cl/ESB/Common/Header/v1.0" targetNamespace="http://servipag.cl/ESB/Common/DataAccess" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xs:element name="DataAccessRequest" type="tns:DataAccessRequest"/>
+	<xs:element name="DataAccessResponse" type="tns:DataAccessResponse"/>
+	<xs:complexType name="DataAccessRequest">
+		<xs:sequence>
+			<xs:element name="Body" type="tns:DataAccessRequestBody"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DataAccessRequestBody">
+		<xs:sequence>
+			<xs:element name="Campos" type="tns:ArrayOfParametros" form="unqualified" minOccurs="0"/>
+			<xs:element name="monto" type="xs:string" minOccurs="0"/>
+			<xs:element name="montoOriginal" type="xs:string" minOccurs="0"/>
+			<xs:element name="pap_id" type="xs:string" minOccurs="0"/>
+			<xs:element name="MediosDePago" type="tns:MediosDePago" form="unqualified" minOccurs="0"/>
+			<xs:element name="Generales" type="tns:Generales" form="unqualified" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DataAccessResponse">
+		<xs:sequence>
+			<xs:element name="Campos" type="tns:ArrayOfParametros" form="unqualified" minOccurs="0"/>
+			<xs:element name="Errores" type="tns:Errores" form="unqualified" minOccurs="0"/>
+			<xs:element name="CodTransaccion" type="tns:CodTransaccion" form="unqualified" minOccurs="0"/>
+			<xs:element name="tiempoBiller" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfParametros">
+		<xs:sequence>
+			<xs:element name="Campo" type="tns:Parametros" form="unqualified" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Parametros">
+		<xs:sequence>
+			<xs:element name="id" type="xs:string" form="unqualified" minOccurs="0"/>
+			<xs:element name="nombre" type="xs:string" form="unqualified"/>
+			<xs:element name="nombreOriginal" type="xs:string" form="unqualified" minOccurs="0"/>
+			<xs:element name="valor" type="xs:string" form="unqualified" minOccurs="0"/>
+			<xs:element name="valorOriginal" type="xs:string" form="unqualified" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Generales">
+		<xs:sequence>
+			<xs:element name="srv_id" type="xs:string" form="unqualified"/>
+			<xs:element name="eps_id" type="xs:string" form="unqualified"/>
+			<xs:element name="ter_id" type="xs:string" form="unqualified"/>
+			<xs:element name="ter_codigo" type="xs:string" form="unqualified"/>
+			<xs:element name="can_id" type="xs:string" form="unqualified"/>
+			<xs:element name="age_id" type="xs:string" form="unqualified"/>
+			<xs:element name="agt_id" type="xs:string" form="unqualified"/>
+			<xs:element name="usu_id" type="xs:string" form="unqualified"/>
+			<xs:element name="usu_nombre" type="xs:string" form="unqualified"/>
+			<xs:element name="cna_id" type="xs:string" form="unqualified"/>
+			<xs:element name="tkt_id" type="xs:string" form="unqualified"/>
+			<xs:element name="codigoServipag" type="xs:string" form="unqualified"/>
+			<xs:element name="fecha_recaudacion" type="xs:string" form="unqualified" minOccurs="0"/>
+			<xs:element name="hora_recaudacion" type="xs:string" form="unqualified" minOccurs="0"/>
+			<xs:element name="tipo_horario" type="xs:string" form="unqualified" minOccurs="0"/>
+			<xs:element name="fecha_contable" type="xs:string" form="unqualified" minOccurs="0"/>
+			<xs:element name="transaccion" type="xs:string" form="unqualified" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MediosDePago">
+		<xs:sequence>
+			<xs:element name="Codigo" type="xs:string"/>
+			<xs:element name="Nombre" type="xs:string"/>
+			<xs:element name="datos_cheque" nillable="true" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="codigo_completo" type="xs:string" minOccurs="0"/>
+						<xs:element name="nro_cuenta" type="xs:string"/>
+						<xs:element name="nro_banco" type="xs:string"/>
+						<xs:element name="nro_serie" type="xs:string"/>
+						<xs:element name="nro_plaza" type="xs:string"/>
+						<xs:element name="rut_librador" type="xs:string" nillable="true"/>
+						<xs:element name="fono_librador" type="xs:string" nillable="true"/>
+						<xs:element name="monto" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Errores">
+		<xs:sequence>
+			<xs:element name="error" type="xs:string"/>
+			<xs:element name="desc" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodTransaccion">
+		<xs:sequence>
+			<xs:element name="nombre" type="xs:string"/>
+			<xs:element name="valor" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

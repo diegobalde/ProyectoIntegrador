@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+		   xmlns:ns1="http://www.globallogic.com.ar/bootcamp/LoggerManagerSchema" 
+		   targetNamespace="http://www.globallogic.com.ar/bootcamp/LoggerManagerSchema" 
+		   elementFormDefault="qualified" 
+		   attributeFormDefault="unqualified">
+	<xs:element name="LoggerManagerRequest">
+		<xs:complexType>
+			<xs:sequence>
+	
+				<xs:element name="RequestLoggerManager" >
+					<xs:complexType >
+						<xs:sequence>
+							<xs:element name="message" type="xs:string" minOccurs="0"/>
+							<xs:element name="varLogging" type="xs:string" minOccurs="0"/>
+							<xs:element name="logContent" type="xs:anyType" minOccurs="1" />
+						</xs:sequence>
+					</xs:complexType>
+					
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+</xs:schema>

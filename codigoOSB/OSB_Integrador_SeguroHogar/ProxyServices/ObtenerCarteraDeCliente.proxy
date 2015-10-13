@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con5="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="Mixed" xsi:type="con6:MixedBindingType" xmlns:con6="http://www.bea.com/wli/sb/services/bindings/config">
+      <con6:request type="XML">
+        <con3:schema ref="OSB_Integrador_SeguroHogar/Resources/SCHEMA/SeguroHogar" element="ObtenerCarteraRequest"/>
+      </con6:request>
+      <con6:response type="XML">
+        <con3:schema ref="OSB_Integrador_SeguroHogar/Resources/SCHEMA/SeguroHogar" element="ObtenerCarteraResponse"/>
+      </con6:response>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/OSB_Integrador_SeguroHogar/ProxyServices/ObtenerCarteraDeCliente</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router errorHandler="_onErrorHandler-1546419368247574054-64cc6dbc.1503876cb2a.-7e42">
+    <con:pipeline type="request" name="Validate_request">
+      <con:stage name="ValidateRequest" errorHandler="_onErrorHandler-8388999940198770044-4bd00f89.1503d37356f.-7df7">
+        <con:context>
+          <con2:varNsDecl namespace="http://bootcamp.globallogic.com.ar/SeguroHogar/schema" prefix="sch"/>
+        </con:context>
+        <con:actions>
+          <con1:validate>
+            <con2:id>_ActionId-1546419368247574054-64cc6dbc.1503876cb2a.-7bdc</con2:id>
+            <con1:schema ref="OSB_Integrador_SeguroHogar/Resources/SCHEMA/SeguroHogar"/>
+            <con1:schemaElement xmlns:sch="http://bootcamp.globallogic.com.ar/SeguroHogar/schema">sch:ObtenerCarteraRequest</con1:schemaElement>
+            <con1:varName>body</con1:varName>
+            <con1:location>
+              <con2:xpathText>./sch:ObtenerCarteraRequest</con2:xpathText>
+            </con1:location>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="Validate_response">
+      <con:stage name="ValidateResponse">
+        <con:context>
+          <con2:varNsDecl namespace="http://bootcamp.globallogic.com.ar/SeguroHogar/schema" prefix="sch"/>
+        </con:context>
+        <con:actions>
+          <con1:validate>
+            <con2:id>_ActionId-1546419368247574054-64cc6dbc.1503876cb2a.-7ba5</con2:id>
+            <con1:schema ref="OSB_Integrador_SeguroHogar/Resources/SCHEMA/SeguroHogar"/>
+            <con1:schemaElement xmlns:sch="http://bootcamp.globallogic.com.ar/SeguroHogar/schema">sch:ObtenerCarteraResponse</con1:schemaElement>
+            <con1:varName>body</con1:varName>
+            <con1:location>
+              <con2:xpathText>./*</con2:xpathText>
+            </con1:location>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="request" name="Call Services_request">
+      <con:stage name="CallServiceObtenerIdClientePS">
+        <con:context>
+          <con2:varNsDecl namespace="http://bootcamp.globallogic.com.ar/SeguroHogar/schema" prefix="sch"/>
+          <con2:varNsDecl namespace="http://www.globallogic.com.ar/bootcamp/integrador/schemas/dic" prefix="dic"/>
+          <con3:variable name="responseIdCliente" path="$responseIdCliente" asChild="false">
+            <con3:schema ref="OSB_Integrador_SeguroHogar/Resources/SCHEMA/SeguroHogar" element="ObtenerIdClienteResponse"/>
+          </con3:variable>
+        </con:context>
+        <con:actions>
+          <con1:wsCallout>
+            <con2:id>_ActionId-8388999940198770044-4bd00f89.1503d37356f.-7fef</con2:id>
+            <con1:service xsi:type="ref:ProxyRef" ref="OSB_Integrador_SeguroHogar/ProxyServices/ObtenerIdClientePS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:request>
+              <con1:payload>$requestIdCliente</con1:payload>
+            </con1:request>
+            <con1:response>
+              <con1:payload>responseIdCliente</con1:payload>
+            </con1:response>
+            <con1:requestTransform>
+              <con1:assign varName="requestIdCliente">
+                <con2:id>_ActionId-8388999940198770044-4bd00f89.1503d37356f.-7fd3</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="OSB_Integrador_SeguroHogar/Resources/XQuery/generateRequestToObtenerIdClientePS"/>
+                    <con2:param name="obtenerCarteraRequestPS">
+                      <con2:path>$body/sch:ObtenerCarteraRequest</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:assign>
+            </con1:requestTransform>
+            <con1:responseTransform>
+              <con1:assign varName="auxiliarResponseSC">
+                <con2:id>_ActionId-8388999940198770044-4bd00f89.1503d37356f.-7df8</con2:id>
+                <con1:expr>
+                  <con2:xqueryText>$responseIdCliente</con2:xqueryText>
+                </con1:expr>
+              </con1:assign>
+              <con1:ifThenElse>
+                <con2:id>_ActionId-8388999940198770044-4bd00f89.1503d37356f.-7eb0</con2:id>
+                <con1:case>
+                  <con1:condition>
+                    <con2:xqueryText>exists($responseIdCliente/sch:resultadoError)</con2:xqueryText>
+                  </con1:condition>
+                  <con1:actions>
+                    <con1:Error>
+                      <con2:id>_ActionId-8388999940198770044-4bd00f89.1503d37356f.-7e85</con2:id>
+                      <con1:errCode>HDP010</con1:errCode>
+                      <con1:message>No existe el usuario con elos datos ingresados</con1:message>
+                    </con1:Error>
+                  </con1:actions>
+                </con1:case>
+                <con1:default/>
+              </con1:ifThenElse>
+            </con1:responseTransform>
+          </con1:wsCallout>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="Call Services_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-1546419368247574054-64cc6dbc.1503876cb2a.-7e42">
+      <con:stage name="Catching Error">
+        <con:context>
+          <con2:varNsDecl namespace="http://bootcamp.globallogic.com.ar/SeguroHogar/schema" prefix="sch"/>
+          <con2:varNsDecl namespace="http://www.globallogic.com.ar/bootcamp/integrador/schemas/dic" prefix="dic"/>
+        </con:context>
+        <con:actions>
+          <con4:route>
+            <con2:id>_ActionId-1546419368247574054-64cc6dbc.1503876cb2a.-7e31</con2:id>
+            <con4:service ref="OSB_Common/Proxy/LoggerManager" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con4:outboundTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-1546419368247574054-64cc6dbc.1503876cb2a.-7e20</con2:id>
+                <con1:location>
+                  <con2:xpathText>.</con2:xpathText>
+                </con1:location>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="OSB_Common/Resoucers/XQuery/generateRequestLogger"/>
+                    <con2:param name="message">
+                      <con2:path>"&lt;&lt; ObtenerCarteraDeCliente Error >>"</con2:path>
+                    </con2:param>
+                    <con2:param name="anyType1">
+                      <con2:path><![CDATA[<error>
+	<fault>{$fault}</fault>
+	<body>{$body}</body>
+</error>]]></con2:path>
+                    </con2:param>
+                    <con2:param name="varLogger">
+                      <con2:path>"fault and body"</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con4:outboundTransform>
+          </con4:route>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-337930866806698590-70f12e6e.1503e0f1df8.-7cd2</con2:id>
+            <con1:location>
+              <con2:xpathText>.</con2:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con2:xqueryText><![CDATA[<sch:ObtenerCarteraResponse>
+	<sch:resultadoError>
+		<dic:codigo>{data($fault/ctx:errorCode)}</dic:codigo>
+	    <dic:descripcion>{data($fault/ctx:reason)}</dic:descripcion>
+	</sch:resultadoError>
+</sch:ObtenerCarteraResponse>]]></con2:xqueryText>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply isError="false">
+            <con2:id>_ActionId-1546419368247574054-64cc6dbc.1503876cb2a.-7dff</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-8388999940198770044-4bd00f89.1503d37356f.-7df7">
+      <con:stage name="stage1">
+        <con:context/>
+        <con:actions>
+          <con1:Error>
+            <con2:id>_ActionId-8388999940198770044-4bd00f89.1503d37356f.-7dc6</con2:id>
+            <con1:errCode>HDP200</con1:errCode>
+            <con1:message>Error en los datos ingresados, no son validos</con1:message>
+          </con1:Error>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="Validate">
+        <con:request>Validate_request</con:request>
+        <con:response>Validate_response</con:response>
+      </con:pipeline-node>
+      <con:pipeline-node name="Call Services">
+        <con:request>Call Services_request</con:request>
+        <con:response>Call Services_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteToObtenerPolizasDeCliente">
+        <con:context>
+          <con2:varNsDecl namespace="http://bootcamp.globallogic.com.ar/SeguroHogar/schema" prefix="sch"/>
+          <con2:varNsDecl namespace="http://www.globallogic.com.ar/bootcamp/integrador/schemas/dic" prefix="dic"/>
+          <con3:variable name="responseObtenerPolizasDeCliente" path="$responseObtenerPolizasDeCliente" asChild="false">
+            <con3:schema ref="OSB_Integrador_SeguroHogar/Resources/SCHEMA/SeguroHogar" element="ObtenerPolizasResponse"/>
+          </con3:variable>
+          <con3:variable name="responseObtenerIdCliente" path="$responseObtenerIdCliente" asChild="false">
+            <con3:schema ref="OSB_Integrador_SeguroHogar/Resources/SCHEMA/SeguroHogar" element="ObtenerIdClienteResponse"/>
+          </con3:variable>
+        </con:context>
+        <con:actions>
+          <con5:route>
+            <con2:id>_ActionId-1546419368247574054-64cc6dbc.1503876cb2a.-7c10</con2:id>
+            <con5:service ref="OSB_Integrador_SeguroHogar/ProxyServices/ObtenerPolizasDeClientePS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con5:outboundTransform>
+              <con1:replace contents-only="true" varName="body">
+                <con2:id>_ActionId-1546419368247574054-64cc6dbc.1503876cb2a.-7bf7</con2:id>
+                <con1:location>
+                  <con2:xpathText>.</con2:xpathText>
+                </con1:location>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="OSB_Integrador_SeguroHogar/Resources/XQuery/generateRequestToObtenerPolizasDeClientePSPorTipoSimple"/>
+                    <con2:param name="idCliente">
+                      <con2:path>data($responseIdCliente/sch:idCliente/dic:idCliente)</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con5:outboundTransform>
+            <con5:responseTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-337930866806698590-70f12e6e.1503e0f1df8.-7d01</con2:id>
+                <con1:location>
+                  <con2:xpathText>.</con2:xpathText>
+                </con1:location>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="OSB_Integrador_SeguroHogar/Resources/XQuery/generateResponseFromObtenerPolizasDeClientePS"/>
+                    <con2:param name="obtenerPolizasResponsePS">
+                      <con2:path>$body/*</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con5:responseTransform>
+          </con5:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

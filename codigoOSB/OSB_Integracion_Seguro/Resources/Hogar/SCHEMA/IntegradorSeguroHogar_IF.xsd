@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://bootcamp.globallogic.com.ar/SeguroHogar/IF/schema" xmlns:dic="http://www.globallogic.com.ar/bootcamp/integrador/schemas/dic" targetNamespace="http://bootcamp.globallogic.com.ar/SeguroHogar/IF/schema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!-- Import diccionario -->
+	<xs:import namespace="http://www.globallogic.com.ar/bootcamp/integrador/schemas/dic" schemaLocation="dic.xsd"/>
+
+	<!-- Request-Response getCartera -->
+	<xs:element name="ObtenerCarteraRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="tipoDocumento" type="dic:TipoDocumento" minOccurs="1" maxOccurs="1" />
+				<xs:element name="nroDocumento" type="xs:long" minOccurs="1" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ObtenerCarteraResponse">
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="polizas" type="dic:PolizaHeader" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+				<xs:sequence>
+					<xs:element name="resultadoError" type="dic:RespuestaError"/>
+				</xs:sequence>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

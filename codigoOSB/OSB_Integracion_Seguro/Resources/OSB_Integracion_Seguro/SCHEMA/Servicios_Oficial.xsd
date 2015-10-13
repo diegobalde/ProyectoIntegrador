@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/getServicios" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/sp/getServicios" xmlns:dic="http://xmlns.oracle.com/pcbpel/adapter/db/sp/getServicios">
+	<xs:element name="RequestPoliza">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TIPO_DOCUMENTO" type="tns:TipoDocumento"/>
+				<xs:element name="DOCUMENTO" type="xs:long"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ReponseServicios">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SEGURO_HOGAR" type="tns:SEGURO_HOGAR_TYPE"/>
+				<xs:element name="SEGURO_AUTOMOTOR" type="tns:SEGURO_AUTOMOTOR_TYPE"/>
+				<xs:element name="SEGURO_ART" type="tns:SEGURO_ART_TYPE"/>
+				<!-- Esperando respuesta de Hogar -->
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="TipoDocumento">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DNI"/>
+			<xs:enumeration value="dni"/>
+			<xs:enumeration value="LC"/>
+			<xs:enumeration value="LE"/>
+			<xs:enumeration value="CUIT"/>
+			<xs:enumeration value="cuit"/>
+			<xs:enumeration value="CUIL"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--___________________________________________________________________________________________________________________________________-->
+	<!--TIPOS DE complexType DE SEGURO DE AUTOMOTOR-->
+	<!--___________________________________________________________________________________________________________________________________-->
+	<xs:complexType name="SEGURO_AUTOMOTOR_TYPE">
+		<xs:sequence>
+			<xs:element name="poliza" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="idPoliza" type="xs:int"/>
+						<xs:element name="prima" type="xs:decimal"/>
+						<xs:element name="premio" type="xs:decimal"/>
+						<xs:element name="idProductor" type="xs:int"/>
+						<xs:element name="idAutomovil" type="xs:int"/>
+						<xs:element name="idCliente" type="xs:int"/>
+						<xs:element name="idPlan" type="xs:int"/>
+						<xs:element name="fechaContratacion" type="xs:dateTime"/>
+						<xs:element name="fechaValidez" type="xs:dateTime"/>
+						<xs:element name="sumaAsegurada" type="xs:decimal"/>
+						<xs:element name="estadoPoliza" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--___________________________________________________________________________________________________________________________________-->
+	<!--TIPOS DE complexType DE SEGURO DE ART-->
+	<!--___________________________________________________________________________________________________________________________________-->
+	<xs:complexType name="SEGURO_ART_TYPE">
+		<xs:sequence>
+			<xs:element name="poliza" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="fechaInicioValidez" type="dic:Fecha"/>
+						<xs:element name="idPlan" type="xs:integer" minOccurs="0"/>
+						<xs:element name="idZonaCobertura" type="xs:integer" minOccurs="0"/>
+						<xs:element name="comision" type="xs:integer"/>
+						<xs:element name="prima" type="xs:integer"/>
+						<xs:element name="premio" type="xs:integer"/>
+						<xs:element name="idPoliza" type="xs:integer"/>
+						<xs:element name="idProductor" type="xs:integer" minOccurs="0"/>
+						<xs:element name="idEmpresaPoliza" type="xs:integer" minOccurs="0"/>
+						<xs:element name="fechaFinValidez" type="dic:Fecha"/>
+						<xs:element name="fechaContrato" type="dic:Fecha"/>
+						<xs:element name="tipo" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--___________________________________________________________________________________________________________________________________-->
+	<!--TIPOS DE complexType DE SEGURO DE Hogar-->
+	<!--___________________________________________________________________________________________________________________________________-->
+	<xs:complexType name="SEGURO_HOGAR_TYPE">
+		<xs:sequence>
+			<xs:element name="Polizas" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="nroPoliza" type="xs:decimal"/>
+						<xs:element name="tipo" type="xs:string"/>
+						<!--Individual | cloectivo-->
+						<xs:element name="premio" type="xs:decimal"/>
+						<xs:element name="fecha_emision" type="xs:dateTime"/>
+						<xs:element name="fecha_vencimiento" type="xs:dateTime"/>
+						<xs:element name="tipo_plan" type="xs:string"/>
+						<!--	Cerrado | Abierto-->
+						<xs:element name="vigente" type="tns:Vigente"/>
+						<!--1 | 0-->
+						<xs:element name="idhogar" type="xs:decimal"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--___________________________________________________________________________________________________________________________________-->
+	<!--TIPOS DE SIMPLETYPE DE SEGURO DE ART-->
+	<!--___________________________________________________________________________________________________________________________________-->
+	<xs:complexType name="idPlan">
+		<xs:sequence>
+			<xs:element name="idPlan" type="xs:integer"/>
+			<xs:element name="nombre" type="xs:string"/>
+			<xs:element name="descripcion" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="idEmpresa">
+		<xs:sequence>
+			<xs:element name="idEmpresa" type="xs:integer"/>
+			<xs:element name="cuit" type="xs:integer"/>
+			<xs:element name="razonSocial" type="xs:string"/>
+			<xs:element name="idDireccion" type="dic:idDireccion"/>
+			<xs:element name="idRubro" type="dic:idRubro"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="idProductor">
+		<xs:sequence>
+			<xs:element name="idProductor" type="xs:integer"/>
+			<xs:element name="idPersona" type="dic:idPersona"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="idPersona">
+		<xs:sequence>
+			<xs:element name="idPersona" type="xs:integer"/>
+			<xs:element name="tipoDoc" type="xs:string"/>
+			<xs:element name="nroDoc" type="xs:integer"/>
+			<xs:element name="nombre" type="xs:string"/>
+			<xs:element name="apellido" type="xs:string"/>
+			<xs:element name="email" type="xs:string"/>
+			<xs:element name="fechaNacimiento" type="dic:Fecha"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="idZonaCobertura">
+		<xs:sequence>
+			<xs:element name="idZonaCobertura" type="xs:integer"/>
+			<xs:element name="nombre" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="idDireccion">
+		<xs:sequence>
+			<xs:element name="idDireccion" type="xs:integer"/>
+			<xs:element name="calle" type="xs:string"/>
+			<xs:element name="numero" type="xs:integer"/>
+			<xs:element name="piso" type="xs:integer"/>
+			<xs:element name="idLocalidad" type="dic:localidad"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="localidad">
+		<xs:sequence>
+			<xs:element name="idLocalidad" type="xs:integer"/>
+			<xs:element name="nombre" type="xs:string"/>
+			<xs:element name="codigoPostal" type="xs:integer"/>
+			<xs:element name="idProvincia" type="dic:provincia"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="provincia">
+		<xs:sequence>
+			<xs:element name="idProvincia" type="xs:integer"/>
+			<xs:element name="nombre" type="xs:string"/>
+			<xs:element name="idPais" type="dic:pais"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="pais">
+		<xs:sequence>
+			<xs:element name="idPais" type="xs:integer"/>
+			<xs:element name="nombre" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="idRubro">
+		<xs:sequence>
+			<xs:element name="idRubro" type="xs:integer"/>
+			<xs:element name="nombre" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Fecha">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(.*)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--___________________________________________________________________________________________________________________________________-->
+	<!--TIPOS DE simpletype DE SEGURO DE HOGAR-->
+	<!--___________________________________________________________________________________________________________________________________-->
+	<xs:simpleType name="Vigente">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Si"/>
+			<xs:enumeration value="No"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

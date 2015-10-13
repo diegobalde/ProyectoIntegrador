@@ -1,0 +1,37 @@
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/obtenerEmailsAdmins"
+ xmlns="http://www.w3.org/2001/XMLSchema" 
+ xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/obtenerEmailsAdmins" 
+ elementFormDefault="qualified">
+
+   <element name="InputParameters">
+      <!--Empty Parameter List-->
+      <complexType/>
+   </element>
+
+   <element name="OutputParameters">
+      <complexType>
+         <sequence>
+            <element name="GETEMAILADMIN" type="db:GETEMAILADMIN_RowSet" db:index="0" db:type="RowSet" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+
+   <complexType name="GETEMAILADMIN_RowSet">
+      <sequence>
+         <element name="GETEMAILADMIN_Row" minOccurs="0" maxOccurs="unbounded">
+            <complexType>
+               <sequence>
+                  <element name="EMAIL" type="db:string50" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+               </sequence>
+            </complexType>
+         </element>
+      </sequence>
+   </complexType>
+
+   <simpleType name="string50">
+      <restriction base="string">
+         <maxLength value="50"/>
+      </restriction>
+   </simpleType>
+
+</schema>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/typesystem/config" xmlns:con1="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con5="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="Mixed" xsi:type="con:MixedBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:request type="XML">
+        <con6:schema ref="OSB_Moneda/Resources/SCHEMAS/getMoneda" element="InputParameters" xmlns:con6="http://www.bea.com/wli/sb/typesystem/config"/>
+      </con:request>
+      <con:response type="XML">
+        <con6:schema ref="OSB_Moneda/Resources/SCHEMAS/getMoneda" element="OutputParameters" xmlns:con6="http://www.bea.com/wli/sb/typesystem/config"/>
+      </con:response>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con1:pipeline type="request" name="validate_request">
+      <con1:stage name="stage1">
+        <con1:context>
+          <con2:varNsDecl namespace="http://globallogic.com.ar/bootcamp/db/sp/getMoneda" prefix="get"/>
+        </con1:context>
+        <con1:actions>
+          <con3:validate>
+            <con2:id>_ActionId-4033823794008532102-10831886.150195b9ee4.-7f77</con2:id>
+            <con3:schema ref="OSB_Moneda/Resources/SCHEMAS/getMoneda"/>
+            <con3:schemaElement xmlns:get="http://globallogic.com.ar/bootcamp/db/sp/getMoneda">get:InputParameters</con3:schemaElement>
+            <con3:varName>body</con3:varName>
+            <con3:location>
+              <con2:xpathText>./get:InputParameters</con2:xpathText>
+            </con3:location>
+          </con3:validate>
+        </con1:actions>
+      </con1:stage>
+    </con1:pipeline>
+    <con1:pipeline type="response" name="validate_response">
+      <con1:stage name="stage1">
+        <con1:context>
+          <con2:varNsDecl namespace="http://globallogic.com.ar/bootcamp/db/sp/getMoneda" prefix="get"/>
+        </con1:context>
+        <con1:actions>
+          <con3:validate>
+            <con2:id>_ActionId-4033823794008532102-10831886.150195b9ee4.-7f65</con2:id>
+            <con3:schema ref="OSB_Moneda/Resources/SCHEMAS/getMoneda"/>
+            <con3:schemaElement xmlns:get="http://globallogic.com.ar/bootcamp/db/sp/getMoneda">get:OutputParameters</con3:schemaElement>
+            <con3:varName>body</con3:varName>
+            <con3:location>
+              <con2:xpathText>./get:OutputParameters</con2:xpathText>
+            </con3:location>
+          </con3:validate>
+        </con1:actions>
+      </con1:stage>
+    </con1:pipeline>
+    <con1:pipeline type="request" name="PipelinePairNode1_request">
+      <con1:stage name="LogginRequestGetMoneda">
+        <con1:context>
+          <con2:varNsDecl namespace="http://globallogic.com.ar/bootcamp/db/sp/getMoneda" prefix="get"/>
+        </con1:context>
+        <con1:actions>
+          <con4:route>
+            <con2:id>_ActionId-4033823794008532102-10831886.150195b9ee4.-7ed0</con2:id>
+            <con4:service ref="OSB_Common/Proxy/LoggerManager" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con4:outboundTransform>
+              <con3:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-4033823794008532102-10831886.150195b9ee4.-7e9c</con2:id>
+                <con3:location>
+                  <con2:xpathText>.</con2:xpathText>
+                </con3:location>
+                <con3:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="OSB_Common/Resoucers/XQuery/generateRequestLogger"/>
+                    <con2:param name="message">
+                      <con2:path>"&lt;&lt; LOGGER REQUEST GET MONEDA >>"</con2:path>
+                    </con2:param>
+                    <con2:param name="anyType1">
+                      <con2:path>$body</con2:path>
+                    </con2:param>
+                    <con2:param name="varLogger">
+                      <con2:path>"body"</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+            </con4:outboundTransform>
+          </con4:route>
+        </con1:actions>
+      </con1:stage>
+    </con1:pipeline>
+    <con1:pipeline type="response" name="PipelinePairNode1_response">
+      <con1:stage name="LoggingResponseGetMoneda">
+        <con1:context>
+          <con2:varNsDecl namespace="http://globallogic.com.ar/bootcamp/db/sp/getMoneda" prefix="get"/>
+        </con1:context>
+        <con1:actions>
+          <con4:route>
+            <con2:id>_ActionId-4033823794008532102-10831886.150195b9ee4.-7eb8</con2:id>
+            <con4:service ref="OSB_Common/Proxy/LoggerManager" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con4:outboundTransform>
+              <con3:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-4033823794008532102-10831886.150195b9ee4.-7e88</con2:id>
+                <con3:location>
+                  <con2:xpathText>.</con2:xpathText>
+                </con3:location>
+                <con3:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="OSB_Common/Resoucers/XQuery/generateRequestLogger"/>
+                    <con2:param name="message">
+                      <con2:path>"&lt;&lt; LOGGER RESPONSE GETMONEDA >>"</con2:path>
+                    </con2:param>
+                    <con2:param name="anyType1">
+                      <con2:path>$body</con2:path>
+                    </con2:param>
+                    <con2:param name="varLogger">
+                      <con2:path>"body"</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+            </con4:outboundTransform>
+          </con4:route>
+        </con1:actions>
+      </con1:stage>
+    </con1:pipeline>
+    <con1:flow>
+      <con1:pipeline-node name="validate">
+        <con1:request>validate_request</con1:request>
+        <con1:response>validate_response</con1:response>
+      </con1:pipeline-node>
+      <con1:pipeline-node name="PipelinePairNode1">
+        <con1:request>PipelinePairNode1_request</con1:request>
+        <con1:response>PipelinePairNode1_response</con1:response>
+      </con1:pipeline-node>
+      <con1:route-node name="RoutingGetMonedaBS">
+        <con1:context>
+          <con2:varNsDecl namespace="http://globallogic.com.ar/bootcamp/db/sp/getMoneda" prefix="get"/>
+          <con2:varNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/getMoneda" prefix="get1"/>
+          <con:variable name="ResponseBS" path="$ResponseBS" asChild="false">
+            <con:schema ref="OSB_Moneda/Resources/SCHEMAS/getMoneda_sp" element="OutputParameters"/>
+          </con:variable>
+        </con1:context>
+        <con1:actions>
+          <con5:route>
+            <con2:id>_ActionId-4033823794008532102-10831886.150195b9ee4.-7f3c</con2:id>
+            <con5:service ref="OSB_Moneda/BusinessServices/getMoneda_db" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con5:operation>getMoneda</con5:operation>
+            <con5:outboundTransform>
+              <con3:replace varName="body" contents-only="false">
+                <con2:id>_ActionId-4033823794008532102-10831886.150195b9ee4.-7f1f</con2:id>
+                <con3:location>
+                  <con2:xpathText>./get:InputParameters</con2:xpathText>
+                </con3:location>
+                <con3:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="OSB_Moneda/Resources/XQuery/generateRequestInputGetMonedaBS"/>
+                    <con2:param name="inputParameters1">
+                      <con2:path>$body/get:InputParameters</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+            </con5:outboundTransform>
+            <con5:responseTransform>
+              <con3:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-4033823794008532102-10831886.150195b9ee4.-7ef2</con2:id>
+                <con3:location>
+                  <con2:xpathText>.</con2:xpathText>
+                </con3:location>
+                <con3:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="OSB_Moneda/Resources/XQuery/generateResponseOutputGetMonedaBS"/>
+                    <con2:param name="outputParameters1">
+                      <con2:path>$body/*</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+            </con5:responseTransform>
+          </con5:route>
+        </con1:actions>
+      </con1:route-node>
+    </con1:flow>
+  </ser:router>
+</xml-fragment>

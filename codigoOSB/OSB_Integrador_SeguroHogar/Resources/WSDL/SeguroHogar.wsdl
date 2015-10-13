@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://bootcamp.globallogic.com.ar/SeguroHogar" xmlns:seguro="http://bootcamp.globallogic.com.ar/SeguroHogar/IF/schema" targetNamespace="http://bootcamp.globallogic.com.ar/SeguroHogar">
+	<wsdl:types>
+		<xs:schema targetNamespace="http://bootcamp.globallogic.com.ar/SeguroHogar/IF/schema" elementFormDefault="qualified">
+			<xs:include schemaLocation="../SCHEMA/IntegradorSeguroHogar_IF.xsd"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="ObtenerCarteraDeClienteRequest">
+		<wsdl:part name="idCliente" element="seguro:ObtenerCarteraRequest"/>
+	</wsdl:message>
+	<wsdl:message name="ObtenerCarteraDeClienteResponse">
+		<wsdl:part name="cliente" element="seguro:ObtenerCarteraResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="SeguroHogar_portType">
+		<wsdl:operation name="obtenerCarteraDeCliente">
+			<wsdl:input message="tns:ObtenerCarteraDeClienteRequest"/>
+			<wsdl:output message="tns:ObtenerCarteraDeClienteResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="SeguroHogar_binding" type="tns:SeguroHogar_portType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="obtenerCarteraDeCliente">
+			<soap:operation soapAction="urn:obtenerCarteraDeCliente"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="SeguroHogar_Service">
+		<wsdl:port name="SeguroHogar_portType" binding="tns:SeguroHogar_binding">
+			<soap:address location="localhost:7101/SeguroHogar"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

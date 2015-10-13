@@ -1,0 +1,15 @@
+<adapter-config name="getPolizas" adapter="Database Adapter" 
+				wsdlLocation="../WSDL/getPolizas.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/grupo_hogar" UIConnectionName="grupo_hogar" adapterRef=""/>
+  <endpoint-interaction portType="getPolizas_ptt" operation="getPolizas">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="ESCUELASOA1"/>
+      <property name="PackageName" value="MARIO_PACKAGE_PKG"/>
+      <property name="ProcedureName" value="CARTERA_CLIENTE"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

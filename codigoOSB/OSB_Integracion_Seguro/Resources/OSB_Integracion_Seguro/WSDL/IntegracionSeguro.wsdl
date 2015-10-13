@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+				xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+				xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+				xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+				xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+				xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+				xmlns:tns="http://new.webservice.namespace" 
+				targetNamespace="http://new.webservice.namespace"
+				xmlns:i_seguro="http://www.globallogic.com.ar/Integracion/Seguros">
+	<wsdl:types>
+		<xs:schema targetNamespace="http://www.globallogic.com.ar/Integracion/Seguros" elementFormDefault="qualified">
+			<xs:include schemaLocation="../SCHEMA/OSB_Integracion_Seguro.xsd"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="ObtenerCarteraRequest">
+		<wsdl:part name="parameter" element="i_seguro:ObtenerCarteraRequest"/>
+	</wsdl:message>
+	<wsdl:message name="ObtenerCarteraResponse">
+		<wsdl:part name="parameter" element="i_seguro:ObtenerCarteraResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="Cartera_PortType">
+		<wsdl:operation name="obtenerCartera">
+			<wsdl:input message="tns:ObtenerCarteraRequest"/>
+			<wsdl:output message="tns:ObtenerCarteraResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="Cartera_Binding" type="tns:Cartera_PortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="obtenerCartera">
+			<soap:operation soapAction="urn:#obtenerCartera"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="CarteraService">
+		<wsdl:port name="Cartera_PortType" binding="tns:Cartera_Binding">
+			<soap:address location="No Target Adress"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+				  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+				  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+				  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+				  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+				  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+				  xmlns:tns="http://www.globallogic.com.ar/getPoliza" 
+				  xmlns:interface="http://www.globallogic.com.ar/interface"
+				targetNamespace="http://www.globallogic.com.ar/getPoliza">
+	<wsdl:types>
+		<xs:schema targetNamespace="http://www.globallogic.com.ar/interface" elementFormDefault="qualified">
+			<xs:include schemaLocation="../Schemas/interface.xsd"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getCarteraRequest">
+		<wsdl:part name="parameter" element="interface:PolizasRequestInterface"/>
+	</wsdl:message>
+	<wsdl:message name="getCarteraResponse">
+		<wsdl:part name="parameter" element="interface:PolizasResponseInterface"/>
+	</wsdl:message>
+	<wsdl:portType name="getCartera_port">
+		<wsdl:operation name="getCartera">
+			<wsdl:input message="tns:getCarteraRequest"/>
+			<wsdl:output message="tns:getCarteraResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="getCartera_Binding" type="tns:getCartera_port">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getCartera">
+			<soap:operation soapAction="urn:/getCartera"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="getCartera">
+		<wsdl:port name="getCartera_port" binding="tns:getCartera_Binding">
+			<soap:address location="http://localhost:8080"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

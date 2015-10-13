@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/Project1/setParameter" name="setParameter-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/Project1/setParameter" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/Project1/setParameter" location="../Resources/WSDL/setParameter.wsdl"/>
+  <binding name="setParameter_ptt-binding" type="tns:setParameter_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="setParameter">
+      <soap:operation soapAction="setParameter"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+    </operation>
+  </binding>
+  <service name="setParameter-service">
+    <port name="setParameter-port" binding="tns:setParameter_ptt-binding">
+      <soap:address location="jca://eis/DB/grupo_hogar"/>
+    </port>
+  </service>
+</definitions>

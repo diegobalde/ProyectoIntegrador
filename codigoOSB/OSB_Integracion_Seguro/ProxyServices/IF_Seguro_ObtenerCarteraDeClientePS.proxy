@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con4:SoapBindingType" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config">
+      <con4:wsdl ref="OSB_Integracion_Seguro/Resources/OSB_Integracion_Seguro/WSDL/IntegracionSeguro"/>
+      <con4:port>
+        <con4:name>Cartera_PortType</con4:name>
+        <con4:namespace>http://new.webservice.namespace</con4:namespace>
+      </con4:port>
+      <con4:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/OSB_Integracion_Seguro/ProxyServices/IF_Seguro_ObtenerCarteraDeClientePS</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router errorHandler="_onErrorHandler-7086355968000608505-135cdac1.15047b08721.-7f26">
+    <con:pipeline type="request" name="Validate_request">
+      <con:stage name="ValidateRequest" errorHandler="_onErrorHandler-8422755778238065265--76e2bdb.1504d274479.-7f03">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.globallogic.com.ar/Integracion/Seguros" prefix="seg"/>
+        </con:context>
+        <con:actions>
+          <con1:validate>
+            <con2:id>_ActionId-7086355968000608505-135cdac1.15047b08721.-7f41</con2:id>
+            <con1:schema ref="OSB_Integracion_Seguro/Resources/OSB_Integracion_Seguro/SCHEMA/OSB_Integracion_Seguro"/>
+            <con1:schemaElement xmlns:seg="http://www.globallogic.com.ar/Integracion/Seguros">seg:ObtenerCarteraRequest</con1:schemaElement>
+            <con1:varName>body</con1:varName>
+            <con1:location>
+              <con2:xpathText>./seg:ObtenerCarteraRequest</con2:xpathText>
+            </con1:location>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="Validate_response">
+      <con:stage name="ValidateResponse">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.globallogic.com.ar/Integracion/Seguros" prefix="seg"/>
+        </con:context>
+        <con:actions>
+          <con1:validate>
+            <con2:id>_ActionId-7086355968000608505-135cdac1.15047b08721.-7f27</con2:id>
+            <con1:schema ref="OSB_Integracion_Seguro/Resources/OSB_Integracion_Seguro/SCHEMA/OSB_Integracion_Seguro"/>
+            <con1:schemaElement xmlns:seg="http://www.globallogic.com.ar/Integracion/Seguros">seg:ObtenerCarteraResponse</con1:schemaElement>
+            <con1:varName>body</con1:varName>
+            <con1:location>
+              <con2:xpathText>./seg:ObtenerCarteraResponse</con2:xpathText>
+            </con1:location>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="request" name="ARTService_request">
+      <con:stage name="ARTCallService">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.globallogic.com.ar/Integracion/Seguros" prefix="seg"/>
+        </con:context>
+        <con:actions>
+          <con1:wsCallout>
+            <con2:id>_ActionId-7086355968000608505-135cdac1.15047b08721.-7f84</con2:id>
+            <con1:service xsi:type="ref:BusinessServiceRef" ref="OSB_Integracion_Seguro/BusinessServices/ARTObtenerCarteraDeClienteBS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:operation>getCartera</con1:operation>
+            <con1:request>
+              <con1:body>$ARTRequest</con1:body>
+            </con1:request>
+            <con1:response>
+              <con1:body>ARTResponse</con1:body>
+            </con1:response>
+            <con1:requestTransform>
+              <con1:assign varName="ARTRequest">
+                <con2:id>_ActionId-7086355968000608505-135cdac1.15047b08721.-7e1c</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="OSB_Integracion_Seguro/Resources/ART/XQuery/generateRequestToARTObtenerPoliza"/>
+                    <con2:param name="obtenerCarteraRequest1">
+                      <con2:path>$body/seg:ObtenerCarteraRequest</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:assign>
+            </con1:requestTransform>
+            <con1:responseTransform/>
+          </con1:wsCallout>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="ARTService_response"/>
+    <con:pipeline type="request" name="AutomotorService_request">
+      <con:stage name="AutomotorCallService">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.globallogic.com.ar/Integracion/Seguros" prefix="seg"/>
+        </con:context>
+        <con:actions>
+          <con1:wsCallout>
+            <con2:id>_ActionId-7086355968000608505-135cdac1.15047b08721.-7f69</con2:id>
+            <con1:service xsi:type="ref:BusinessServiceRef" ref="OSB_Integracion_Seguro/BusinessServices/AutomotorObtenerCarteraDeClienteBS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:operation>getCarteraOperation</con1:operation>
+            <con1:request>
+              <con1:body>$AutomotorRequest</con1:body>
+            </con1:request>
+            <con1:response>
+              <con1:body>AutomotorResponse</con1:body>
+            </con1:response>
+            <con1:requestTransform>
+              <con1:assign varName="AutomotorRequest">
+                <con2:id>_ActionId-7086355968000608505-135cdac1.15047b08721.-7e03</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="OSB_Integracion_Seguro/Resources/Automotor/XQuery/generateRequestToAutomotorObtenerPoliza"/>
+                    <con2:param name="obtenerCarteraRequestPS">
+                      <con2:path>$body/seg:ObtenerCarteraRequest</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:assign>
+            </con1:requestTransform>
+            <con1:responseTransform/>
+          </con1:wsCallout>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="AutomotorService_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-7086355968000608505-135cdac1.15047b08721.-7f26">
+      <con:stage name="Catch">
+        <con:context/>
+        <con:actions>
+          <con4:route>
+            <con2:id>_ActionId-8422755778238065265--76e2bdb.1504d274479.-7f13</con2:id>
+            <con4:service ref="OSB_Common/Proxy/SenderMailPS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con4:outboundTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-8422755778238065265--76e2bdb.1504d274479.-7f04</con2:id>
+                <con1:location>
+                  <con2:xpathText>.</con2:xpathText>
+                </con1:location>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="OSB_Common/Resoucers/XQuery/generateRequestToSenderEmailSP"/>
+                    <con2:param name="content">
+                      <con2:path>data($fault/ctx:reason)</con2:path>
+                    </con2:param>
+                    <con2:param name="subject">
+                      <con2:path>"Error en: IF_Seguro_ObtenerCarteraDeClientePS"</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con4:outboundTransform>
+          </con4:route>
+          <con2:reply>
+            <con2:id>_ActionId-7086355968000608505-135cdac1.15047b08721.-7f0b</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-8422755778238065265--76e2bdb.1504d274479.-7f03">
+      <con:stage name="catch validate">
+        <con:context/>
+        <con:actions>
+          <con1:Error>
+            <con2:id>_ActionId-8422755778238065265--76e2bdb.1504d274479.-7ee2</con2:id>
+            <con1:errCode>HDP999</con1:errCode>
+            <con1:message>Error de validacion en request en IF_Seguro_ObtenerCarteraDeClientePS</con1:message>
+          </con1:Error>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="Validate">
+        <con:request>Validate_request</con:request>
+        <con:response>Validate_response</con:response>
+      </con:pipeline-node>
+      <con:pipeline-node name="ARTService">
+        <con:request>ARTService_request</con:request>
+        <con:response>ARTService_response</con:response>
+      </con:pipeline-node>
+      <con:pipeline-node name="AutomotorService">
+        <con:request>AutomotorService_request</con:request>
+        <con:response>AutomotorService_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteToHogarObtenerCarteraDeClienrte">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.globallogic.com.ar/Integracion/Seguros" prefix="seg"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con2:id>_ActionId-7086355968000608505-135cdac1.15047b08721.-7f56</con2:id>
+            <con3:service ref="OSB_Integracion_Seguro/BusinessServices/HogarObtenerCarteraDeClienteBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>obtenerCarteraDeCliente</con3:operation>
+            <con3:outboundTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-7086355968000608505-135cdac1.15047b08721.-7df0</con2:id>
+                <con1:location>
+                  <con2:xpathText>.</con2:xpathText>
+                </con1:location>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="OSB_Integracion_Seguro/Resources/Hogar/XQuery/generateRequestToHogarObtenerPoliza"/>
+                    <con2:param name="obtenerCarteraRequestPS">
+                      <con2:path>$body/seg:ObtenerCarteraRequest</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con1:replace contents-only="true" varName="body">
+                <con2:id>_ActionId-7086355968000608505-135cdac1.15047b08721.-7d7c</con2:id>
+                <con1:location>
+                  <con2:xpathText>.</con2:xpathText>
+                </con1:location>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="OSB_Integracion_Seguro/Resources/OSB_Integracion_Seguro/generateResponseFromServices"/>
+                    <con2:param name="AutomotorPolizasResponse">
+                      <con2:path>$AutomotorResponse</con2:path>
+                    </con2:param>
+                    <con2:param name="HogarPolizasResponse">
+                      <con2:path>$body/*</con2:path>
+                    </con2:param>
+                    <con2:param name="ARTPolizasResponse">
+                      <con2:path>$ARTResponse</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

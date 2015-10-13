@@ -1,0 +1,36 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:interface="http://www.globallogic.com.ar/interface" xmlns:dic="http://www.globallogic.com.ar/diccionario" targetNamespace="http://www.globallogic.com.ar/interface" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.globallogic.com.ar/diccionario" schemaLocation="Diccionario.xsd"/>
+	<xs:element name="PolizasRequestInterface">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="dic:cuit"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PolizasResponseInterface">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="poliza" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="dic:fechaInicioValidez"/>
+							<xs:element name="idPlan" type="xs:integer" minOccurs="0"/>
+							<xs:element name="idZonaCobertura" type="xs:integer" minOccurs="0"/>
+							<xs:element ref="dic:comision"/>
+							<xs:element ref="dic:prima"/>
+							<xs:element ref="dic:premio"/>
+							<xs:element ref="dic:idPoliza"/>
+							<xs:element name="idProductor" type="xs:integer" minOccurs="0"/>
+							<xs:element name="idEmpresaPoliza" type="xs:integer" minOccurs="0"/>
+							<xs:element ref="dic:fechaFinValidez"/>
+							<xs:element ref="dic:fechaContrato"/>
+							<xs:element ref="dic:tipo"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="errorCode" type="xs:string"/>
+				<xs:element name="errorDesc" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

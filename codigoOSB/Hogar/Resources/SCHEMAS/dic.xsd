@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	
+		<xs:complexType name="Cliente">
+			<xs:sequence>
+				<xs:element name="idCliente" type="xs:long" />
+				<xs:element name="fechaNacimiento" type="xs:date" ></xs:element>
+				<xs:element name="nombre" type="xs:string"/>
+				<xs:element name="apellido" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:complexType name="PolizaHeader">
+			<xs:sequence>
+				<xs:element name="idPoliza" type="xs:long" />
+				<xs:element name="fechaEmision" type="xs:date" ></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	
+</xs:schema>

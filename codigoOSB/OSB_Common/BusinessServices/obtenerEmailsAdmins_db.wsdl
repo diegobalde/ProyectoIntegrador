@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_Application/SOA_Project_1/obtenerEmailsAdmins" name="obtenerEmailsAdmins-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_Application/SOA_Project_1/obtenerEmailsAdmins" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_Application/SOA_Project_1/obtenerEmailsAdmins" location="../Resoucers/WSDL/obtenerEmailsAdmins.wsdl"/>
+  <binding name="obtenerEmailsAdmins_ptt-binding" type="tns:obtenerEmailsAdmins_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="obtenerEmailsAdmins">
+      <soap:operation soapAction="obtenerEmailsAdmins"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="obtenerEmailsAdmins-service">
+    <port name="obtenerEmailsAdmins-port" binding="tns:obtenerEmailsAdmins_ptt-binding">
+      <soap:address location="jca://eis/DB/grupo_hogar"/>
+    </port>
+  </service>
+</definitions>
