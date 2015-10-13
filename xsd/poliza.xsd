@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.globallogic.com.ar/tipoPoliza"  elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xsd:include schemaLocation="./tipoPoliza.xsd" />
+	
+	<xsd:element name="RequestPoliza">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="id" type="xsd:int"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="ResponsePoliza">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="poliza" type="ns1:Poliza" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+</xsd:schema>

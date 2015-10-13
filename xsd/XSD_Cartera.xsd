@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+xmlns:ns1="http://www.globallogic.com.ar/cartera" 
+targetNamespace="http://www.globallogic.com.ar/cartera" 
+elementFormDefault="qualified"
+attributeFormDefault="unqualified">
+	
+	<xsd:element name="CarteraRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="nombreCliente" type="xsd:string" minOccurs="0"/>
+				<xsd:element name="apellidoCliente" type="xsd:string" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="Poliza">
+		<xsd:complexType name="poliza">
+			<xsd:sequence>
+				<xsd:element name="nroPoliza" type="xsd:string" minOccurs="0"/>
+				<xsd:element name="tipo" type="xsd:int"/>
+				<xsd:element name="fechaEmision" type="xsd:string" minOccurs="0"/>
+				<xsd:element name="fechaVencimiento" type="xsd:int"/>
+				<xsd:element name="vigente" type="xsd:int"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+		<xsd:element name="CarteraResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="cartera" type="xsd:Poliza"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+
+</xsd:schema>

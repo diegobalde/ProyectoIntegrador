@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+xmlns:ns1="http://www.globallogic.com.ar/cliente" 
+targetNamespace="http://www.globallogic.com.ar/cliente" 
+elementFormDefault="qualified" 
+attributeFormDefault="unqualified">
+	
+	<xsd:element name="ClienteRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="tipoDoc" type="xsd:string" minOccurs="0"/>
+				<xsd:element name="numero" type="xsd:int"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="ClienteResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="tipoDoc" type="xsd:string" minOccurs="0"/>
+				<xsd:element name="numero" type="xsd:int"/>
+				<xsd:element name="nombre" type="xsd:string"/>
+				<xsd:element name="apellido" type="xsd:string"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+
+</xsd:schema>
