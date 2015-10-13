@@ -1,0 +1,36 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.globallogic.com.ar/tipoPoliza" xmlns:poliza="http://www.globallogic.com.ar/tipoPoliza" targetNamespace="http://www.globallogic.com.ar/tipoPoliza">
+	<wsdl:types>
+		<xs:schema targetNamespace="http://www.globallogic.com.ar/tipoPoliza" elementFormDefault="qualified">
+			<xs:include schemaLocation="./poliza.xsd"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getPolizaRequest">
+		<wsdl:part name="parameter" element="poliza:RequestPoliza"/>
+	</wsdl:message>
+	<wsdl:message name="getPolizaResponse">
+		<wsdl:part name="parameter" element="poliza:ResponsePoliza"/>
+	</wsdl:message>
+	<wsdl:portType name="getPoliza_port">
+		<wsdl:operation name="getPoliza">
+			<wsdl:input message="tns:getPolizaRequest"/>
+			<wsdl:output message="tns:getPolizaResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="getPoliza_binding" type="tns:getPoliza_port">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getPoliza">
+			<soap:operation soapAction="urn:/getPoliza"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="getPoliza">
+		<wsdl:port name="getPoliza_port" binding="tns:getPoliza_binding">
+			<soap:address location="http://localhost:8080"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

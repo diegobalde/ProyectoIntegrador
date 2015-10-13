@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:complexType name="Poliza">
+			<xsd:sequence>
+				<xsd:element name="id_poliza" type="xsd:int"/>
+				<xsd:element name="tipo" type="xsd:string"/>
+				<xsd:element name="premio" type="xsd:int"/>
+				<xsd:element name="fecha_emision" type="xsd:date"/>
+				<xsd:element name="fecha_validez" type="xsd:date"/>
+				<xsd:element name="tipo_plan" type="xsd:string"/>
+				<xsd:element name="vigente" type="xsd:int"/>
+				<xsd:element name="id_hogar" type="xsd:int"/>
+			</xsd:sequence>
+		</xsd:complexType>
+</xsd:schema>
